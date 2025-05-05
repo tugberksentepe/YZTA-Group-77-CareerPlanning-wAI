@@ -42,18 +42,29 @@ Mobil uygulama detayları için [flutter_client/README.md](flutter_client/README
 
 ### Backend API Kurulumu
 
-1. Gerekli Python paketlerini yükleyin:
+1. Sanal ortam oluşturun ve etkinleştirin:
+```bash
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
+```
+
+2. Gerekli Python paketlerini yükleyin:
 ```bash
 pip install -r requirements.txt
 ```
 
-2. `.env` dosyasını oluşturun:
+3. `.env` dosyasını oluşturun:
 ```
 GOOGLE_API_KEY=your_gemini_api_key_here
 DATABASE_URL=sqlite:///./career_planner.db
 ```
 
-3. API'yi başlatın:
+4. API'yi başlatın:
 ```bash
 uvicorn main:app --reload
 ```
@@ -91,4 +102,8 @@ flutter run
 - API iletişimi ve state yönetimi `flutter_client/lib/services/` klasöründe
 - Ekranlar `flutter_client/lib/screens/` klasöründe
 - Veri modelleri `flutter_client/lib/models/` klasöründe
+<<<<<<< HEAD
 - UI bileşenleri `flutter_client/lib/widgets/` klasöründe (eklenebilir)
+=======
+- UI bileşenleri `flutter_client/lib/widgets/` klasöründe (eklenebilir)
+>>>>>>> 658986a (Readme Update)

@@ -100,23 +100,34 @@ Pydantic-settings kullanarak uygulama ayarlarını yönetir:
 
 ## Kurulum
 
-1. Ana dizinde olduğunuzdan emin olun ve bağımlılıkları yükleyin:
+1. Ana dizinde olduğunuzdan emin olun ve sanal ortam oluşturup etkinleştirin:
+   ```bash
+   # Windows
+   python -m venv venv
+   venv\Scripts\activate
+   
+   # macOS/Linux
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+2. Bağımlılıkları yükleyin:
    ```bash
    pip install -r requirements.txt
    ```
 
-2. `.env` dosyası oluşturun veya düzenleyin:
+3. `.env` dosyası oluşturun veya düzenleyin:
    ```
    GOOGLE_API_KEY=your-gemini-api-key
    DATABASE_URL=sqlite:///./career_planner.db
    ```
 
-3. API'yi başlatın:
+4. API'yi başlatın:
    ```bash
    uvicorn main:app --reload
    ```
 
-4. Tarayıcıda API dökümantasyonuna erişin: `http://localhost:8000/docs`
+5. Tarayıcıda API dökümantasyonuna erişin: `http://localhost:8000/docs`
 
 ## API Akış Şeması
 
