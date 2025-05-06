@@ -2,6 +2,12 @@
 
 Gemini API kullanarak AI destekli kariyer planlaması yapan bir FastAPI uygulaması. Bu uygulama, kullanıcılardan dinamik sorular aracılığıyla bilgi toplar, yanıtlarına dayalı olarak kişiselleştirilmiş kariyer planları oluşturur ve bu planlar hakkında etkileşimli AI sohbeti sunar.
 
+<p align="center">
+  <img src="../screenshots/main.png" alt="Ana Ekran" width="250" />
+  <img src="../screenshots/complatedquestionstage.png" alt="Anket Tamamlandı" width="250" />
+  <img src="../screenshots/careerplan.png" alt="Kariyer Planı" width="250" />
+</p>
+
 ## Özellikler
 
 - **Dinamik AI Destekli Soru-Cevap**: Gemini API ile kişiselleştirilmiş 10 soru
@@ -35,6 +41,29 @@ app/
 │   └── gemini_service.py # Gemini API entegrasyonu
 └── __init__.py          # Paket tanımı
 ```
+
+## Uygulamanın Çalışma Aşamaları
+
+### 1. Ana Ekran: Anket Başlangıcı
+<p align="center">
+  <img src="../screenshots/main.png" alt="Ana Ekran" width="300" />
+</p>
+
+Uygulama başladığında kullanıcıya anket durumunu gösterir. Henüz anket tamamlanmamışsa, kullanıcı anketi başlatabilir.
+
+### 2. Anket Tamamlanma Ekranı
+<p align="center">
+  <img src="../screenshots/complatedquestionstage.png" alt="Anket Tamamlandı" width="300" />
+</p>
+
+Tüm sorular yanıtlandıktan sonra, kullanıcı kariyer planı oluşturma seçeneğine sahip olur.
+
+### 3. Kariyer Planı ve AI Sohbet
+<p align="center">
+  <img src="../screenshots/careerplan.png" alt="Kariyer Planı" width="300" />
+</p>
+
+Oluşturulan kariyer planı, detaylı bölümler içerir ve kullanıcı AI ile sohbet ederek daha fazla bilgi alabilir.
 
 ## Detaylı Bileşen Açıklamaları
 
@@ -150,29 +179,6 @@ Uygulamanın tipik kullanım akışı:
 4. **AI ile Sohbet**:
    - Kullanıcı kariyer planı hakkında sorular sorabilir (`POST /career-plan/chat`)
    - Sohbet geçmişi görüntülenebilir (`GET /career-plan/chat-history`)
-
-## Ekip için Geliştirici Notları
-
-1. **Yeni Endpoint Eklemek**:
-   - İlgili `app/routers/` klasörüne yeni endpoint'ler ekleyebilirsiniz
-   - Yeni eklenen yönlendiricileri `main.py` dosyasında kaydetmeyi unutmayın
-
-2. **Veritabanı Şemasında Değişiklik**:
-   - `app/database/database.py` dosyasında tablo yapılarını değiştirebilirsiniz
-   - Değişikliklerden sonra uygulama ilk çalıştırıldığında tabloları otomatik oluşturacaktır
-
-3. **AI İstek Şablonlarını Değiştirme**:
-   - `app/services/gemini_service.py` dosyasında AI istek şablonlarını (promptları) düzenleyebilirsiniz
-   - Prompt mühendisliği için titiz testler yapmanız önerilir
-
-4. **Hata Ayıklama**:
-   - API'de oturum açma etkinleştirilmiştir
-   - Hata ayıklama için logları kontrol edin
-   - Swagger UI (`/docs`) endpoint'leri test etmek için kullanılabilir
-
-5. **Performans İyileştirmeleri**:
-   - Gemini API çağrıları, uzun yanıt süreleri nedeniyle asenkron olarak yapılır
-   - Büyük ölçekli dağıtımlar için önbellek mekanizmaları ekleyebilirsiniz
 
 ## API Endpoint'lerinin Detaylı Kullanımı
 
@@ -314,18 +320,26 @@ GET /career-plan/chat-history?email=kullanici@ornek.com
 }
 ```
 
-## Güvenlik Önlemleri
 
-- API'de temel koruma mekanizmaları bulunmaktadır
-- Üretim ortamına geçmeden önce ek güvenlik önlemleri eklenmesi önerilir:
-  - Kullanıcı kimlik doğrulama (Authentication)
-  - Yetkilendirme (Authorization)
-  - Rate limiting
-  - HTTPS zorunluluğu
+## Geliştirici Notları
 
-## Sorun Giderme
+1. **Yeni Endpoint Eklemek**:
+   - İlgili `app/routers/` klasörüne yeni endpoint'ler ekleyebilirsiniz
+   - Yeni eklenen yönlendiricileri `main.py` dosyasında kaydetmeyi unutmayın
 
-- **Gemini API Hataları**: API anahtarınızın geçerli olduğundan emin olun
-- **Veritabanı Hataları**: Dosya izinlerini ve veritabanı dosyasının yazılabilir olduğunu kontrol edin
-- **502 Bad Gateway**: AI isteklerinin zaman aşımı süreleri uzun sürebilir, bağlantı sürelerini artırın
-- **Tutarsız Yanıtlar**: AI modelinin yanıtlarını düzenleyen prompt şablonlarını (prompt templates) iyileştirin 
+2. **Veritabanı Şemasında Değişiklik**:
+   - `app/database/database.py` dosyasında tablo yapılarını değiştirebilirsiniz
+   - Değişikliklerden sonra uygulama ilk çalıştırıldığında tabloları otomatik oluşturacaktır
+
+3. **AI İstek Şablonlarını Değiştirme**:
+   - `app/services/gemini_service.py` dosyasında AI istek şablonlarını (promptları) düzenleyebilirsiniz
+   - Prompt mühendisliği için titiz testler yapmanız önerilir
+
+4. **Hata Ayıklama**:
+   - API'de oturum açma etkinleştirilmiştir
+   - Hata ayıklama için logları kontrol edin
+   - Swagger UI (`/docs`) endpoint'leri test etmek için kullanılabilir
+
+5. **Performans İyileştirmeleri**:
+   - Gemini API çağrıları, uzun yanıt süreleri nedeniyle asenkron olarak yapılır
+   - Büyük ölçekli dağıtımlar için önbellek mekanizmaları ekleyebilirsiniz

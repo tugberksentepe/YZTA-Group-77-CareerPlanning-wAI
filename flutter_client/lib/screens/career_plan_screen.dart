@@ -21,7 +21,9 @@ class _CareerPlanScreenState extends State<CareerPlanScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
     _loadData();
+    });
   }
 
   @override
@@ -43,8 +45,7 @@ class _CareerPlanScreenState extends State<CareerPlanScreen> {
     
     await Provider.of<CareerPlanProvider>(context, listen: false)
         .sendMessage(message);
-    
-    // Scroll to bottom
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (_scrollController.hasClients) {
         _scrollController.animateTo(

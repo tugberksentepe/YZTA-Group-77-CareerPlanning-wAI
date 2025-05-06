@@ -18,7 +18,9 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
     _loadQuestion();
+    });
   }
 
   @override
@@ -31,10 +33,10 @@ class _QuestionnaireScreenState extends State<QuestionnaireScreen> {
     final provider = Provider.of<QuestionnaireProvider>(context, listen: false);
     
     if (provider.isComplete) {
-      // Anket tamamlanmışsa, cevapları yükle
+
       await provider.getAllAnswers();
     } else if (provider.currentQuestion == null) {
-      // Mevcut soru yoksa, sonraki soruyu yükle
+
       await provider.getNextQuestion();
     }
   }

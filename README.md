@@ -2,6 +2,20 @@
 
 Bu proje, yapay zeka destekli bir kariyer planlama sistemi içerir. Kullanıcıların sorulara verdikleri cevaplara göre kişiselleştirilmiş kariyer planları oluşturur ve yapay zeka ile kariyer planı üzerinde sohbet etmelerini sağlar.
 
+<p align="center">
+  <img src="screenshots/main.png" alt="Ana Ekran" width="300" />
+  <img src="screenshots/complatedquestionstage.png" alt="Anket Tamamlandı" width="300" />
+  <img src="screenshots/careerplan.png" alt="Kariyer Planı" width="300" />
+</p>
+
+## Özellikler
+
+- **AI Destekli Dinamik Anket**: Gemini API kullanarak kullanıcılara kişiselleştirilmiş 10 soru yöneltir
+- **Kişiselleştirilmiş Kariyer Planı**: Kullanıcının cevaplarına göre detaylı ve kapsamlı bir kariyer planı oluşturur
+- **AI Sohbet Desteği**: Hazırlanan kariyer planı hakkında yapay zeka ile sohbet etme imkanı
+- **Modern ve Kullanıcı Dostu Arayüz**: Flutter ile geliştirilmiş mobil uygulama
+- **Esnek Entegrasyon**: FastAPI tabanlı backend API ve Flutter tabanlı mobil uygulama
+
 ## Proje Yapısı
 
 Proje iki ana bölümden oluşmaktadır:
@@ -31,6 +45,13 @@ Flutter tabanlı mobil uygulama, backend API ile entegre çalışarak kullanıc�
 - Güzel ve kullanıcı dostu arayüz
 
 Mobil uygulama detayları için [flutter_client/README.md](flutter_client/README.md) dosyasına bakabilirsiniz.
+
+## Nasıl Çalışır?
+
+1. **Kullanıcıya Dinamik Sorular**: Kullanıcı anketi başlattığında, AI kullanıcının profiline uygun sorular yöneltir
+2. **Kişisel Bilgi Toplama**: Kullanıcının yanıtları doğrultusunda, sonraki sorular daha spesifik ve kişiselleştirilmiş hale gelir
+3. **AI Destekli Kariyer Planı**: Tüm sorulara verilen yanıtlar analiz edilerek, kişiselleştirilmiş bir kariyer planı oluşturulur
+4. **Etkileşimli Sohbet**: Oluşturulan plan hakkında AI ile sohbet ederek daha fazla detay alınabilir
 
 ## Kurulum ve Çalıştırma
 
@@ -90,10 +111,36 @@ EMAIL=test@example.com
 flutter run
 ```
 
-## Ekip İçin Notlar
+## Uygulama Ekranları
+
+### Ana Ekran
+Ana ekranda kullanıcılar anket sürecini başlatabilir ve mevcut durumlarını görüntüleyebilirler.
+
+<p align="center">
+  <img src="screenshots/main.png" alt="Ana Ekran" width="350" />
+</p>
+
+### Anket Tamamlandı Ekranı
+Tüm soruları yanıtladıktan sonra, kullanıcı kariyer planı oluşturma seçeneğini görür.
+
+<p align="center">
+  <img src="screenshots/complatedquestionstage.png" alt="Anket Tamamlandı" width="350" />
+</p>
+
+### Kariyer Planı Ekranı
+Oluşturulan kariyer planı, markdown formatında detaylı bir şekilde görüntülenir ve kullanıcı AI ile sohbet edebilir.
+
+<p align="center">
+  <img src="screenshots/careerplan.png" alt="Kariyer Planı" width="350" />
+</p>
+
+## Teknolojiler
+
+- **Backend**: Python, FastAPI, SQLite, Gemini API
+- **Frontend**: Flutter, Dart, Provider state management
 
 ### Backend Geliştiricileri İçin
-- FastAPI ve SQL Alchemy ile veritabanı işlemleri `app/database/` klasöründe
+- FastAPI ve SQLite ile veritabanı işlemleri `app/database/` klasöründe
 - Gemini API entegrasyonu `app/services/` klasöründe
 - API endpoint'leri `app/routers/` klasöründe
 - Veri modelleri `app/schemas/` klasöründe 
@@ -102,8 +149,5 @@ flutter run
 - API iletişimi ve state yönetimi `flutter_client/lib/services/` klasöründe
 - Ekranlar `flutter_client/lib/screens/` klasöründe
 - Veri modelleri `flutter_client/lib/models/` klasöründe
-<<<<<<< HEAD
-- UI bileşenleri `flutter_client/lib/widgets/` klasöründe (eklenebilir)
-=======
-- UI bileşenleri `flutter_client/lib/widgets/` klasöründe (eklenebilir)
->>>>>>> 658986a (Readme Update)
+- UI bileşenleri `flutter_client/lib/widgets/` klasöründe
+

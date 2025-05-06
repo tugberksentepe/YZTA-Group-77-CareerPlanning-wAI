@@ -2,6 +2,12 @@
 
 Bu uygulama, AI destekli kariyer planlama backend API'si ile entegre çalışan bir Flutter mobil uygulamasıdır.
 
+<p align="center">
+  <img src="../screenshots/main.png" alt="Ana Ekran" width="250" />
+  <img src="../screenshots/complatedquestionstage.png" alt="Anket Tamamlandı" width="250" />
+  <img src="../screenshots/careerplan.png" alt="Kariyer Planı" width="250" />
+</p>
+
 ## Özellikler
 
 - **Dinamik Anket Sistemi**: Backend API'den gelen kişiselleştirilmiş anket soruları
@@ -51,6 +57,29 @@ flutter_client/
 └── pubspec.yaml            # Bağımlılıklar ve yapılandırma
 ```
 
+## Ekran Görüntüleri ve Açıklamaları
+
+### Ana Ekran
+<p align="center">
+  <img src="../screenshots/main.png" alt="Ana Ekran" width="300" />
+</p>
+
+Ana ekranda kullanıcılar anket sürecini başlatabilir, mevcut tamamlama durumunu görüntüleyebilir ve kariyer planı ekranına geçiş yapabilirler.
+
+### Anket Tamamlandı Ekranı
+<p align="center">
+  <img src="../screenshots/complatedquestionstage.png" alt="Anket Tamamlandı" width="300" />
+</p>
+
+Tüm sorular yanıtlandıktan sonra, kullanıcı kariyer planı oluşturma seçeneğini görür. Bu ekranda ayrıca anket cevapları da listelenebilir.
+
+### Kariyer Planı Ekranı
+<p align="center">
+  <img src="../screenshots/careerplan.png" alt="Kariyer Planı" width="300" />
+</p>
+
+Oluşturulan kariyer planı, markdown formatında detaylı bir şekilde görüntülenir. Kullanıcı ayrıca sağ üst köşedeki sekme ile AI sohbet moduna geçebilir.
+
 ## Kurulum
 
 ### Gereksinimler
@@ -85,7 +114,19 @@ flutter_client/
    flutter run
    ```
 
-## Ekip için Geliştirici Notları
+## Uygulama Akışı
+
+1. **Giriş**: Uygulama açıldığında, `HomeScreen` kullanıcıyı karşılar
+2. **Anket**: "Anketi Başlat" butonuna tıklanarak `QuestionnaireScreen` açılır
+   - Kullanıcı soruları sırayla yanıtlar
+   - Cevaplar API'ye kaydedilir
+   - Tüm sorular tamamlandığında anket tamamlanmış sayılır
+3. **Kariyer Planı**: Anket tamamlandıktan sonra, "Kariyer Planı Oluştur" butonuyla `CareerPlanScreen` açılır
+   - Kariyer planı varsa görüntülenir, yoksa oluşturulabilir
+   - Plan içeriği markdown formatında gösterilir
+   - Kullanıcı planla ilgili AI'a sorular sorabilir
+
+## Geliştirici Notları - Teknik Detaylar
 
 ### 1. Yeni Ekranlar Eklemek
 
@@ -119,7 +160,7 @@ Future<YeniModel> yeniFonksiyon(String parametre) async {
   );
 
   if (response.statusCode == 200) {
-    return YeniModel.fromJson(jsonDecode(response.body));
+    return YeniModel.fromJson(jsonDecode(utf8.decode(response.bodyBytes)));
   } else {
     throw Exception('Veri alınamadı: ${response.body}');
   }
@@ -148,79 +189,18 @@ MultiProvider(
 );
 ```
 
-### 4. Kullanıcı Arayüzü Bileşenleri
-
-- UI tasarımı Material Design esaslarını takip etmektedir
-- Ana renk temaları `main.dart` dosyasında tanımlanmıştır
-- Çıplak renk değerleri yerine, tema renkleri kullanın:
-
-```dart
-// Doğru kullanım:
-color: Theme.of(context).primaryColor,
-
-// Kaçınılması gereken:
-color: const Color(0xFF2A3990),
-```
-
-### 5. Hata Yönetimi
+### 4. Hata Yönetimi ve Tip Dönüşümleri
 
 - API hatalarını her zaman try-catch blokları içinde yakalayın
 - Kullanıcıya anlamlı hata mesajları gösterin, teknik detayları gizleyin
-- İstek başarısız olduğunda bir geri dönüş UI'ı (fallback UI) gösterin
+- Veri modelleri arasında dönüşüm yaparken tip uyuşmazlıklarına dikkat edin:
 
 ```dart
-try {
-  await provider.loadData();
-} catch (e) {
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(content: Text('Veriler yüklenirken bir hata oluştu. Lütfen tekrar deneyin.')),
-  );
+// Örnek: API'den int gelen değeri bool'a dönüştürme 
+bool isUserBool;
+if (json['is_user'] is int) {
+  isUserBool = json['is_user'] == 1;
+} else {
+  isUserBool = json['is_user'] as bool;
 }
 ```
-
-## Uygulama Akışı
-
-1. **Giriş**: Uygulama açıldığında, `HomeScreen` kullanıcıyı karşılar
-2. **Anket**: "Anketi Başlat" butonuna tıklanarak `QuestionnaireScreen` açılır
-   - Kullanıcı soruları sırayla yanıtlar
-   - Cevaplar API'ye kaydedilir
-   - Tüm sorular tamamlandığında anket tamamlanmış sayılır
-3. **Kariyer Planı**: Anket tamamlandıktan sonra, "Kariyer Planı Oluştur" butonuyla `CareerPlanScreen` açılır
-   - Kariyer planı varsa görüntülenir, yoksa oluşturulabilir
-   - Plan içeriği markdown formatında gösterilir
-   - Kullanıcı planla ilgili AI'a sorular sorabilir
-
-## Sorun Giderme
-
-1. **API İletişim Hataları**:
-   - Backend API'nin çalıştığından emin olun
-   - `.env` dosyasında doğru API URL'sinin tanımlandığını kontrol edin
-   - Ağ bağlantısını kontrol edin
-
-2. **UI Sorunları**:
-   - Farklı ekran boyutlarında uygulamayı test edin
-   - Flutter'ın hot-reload özelliğini kullanarak hızlı değişiklikler yapın
-   - Widget ağacını Flutter DevTool ile inceleyin
-
-3. **Performans Sorunları**:
-   - Büyük listeler için `ListView.builder` kullanın
-   - Uzun işlemleri arka planda yapın
-   - Gereksiz rebuild'leri önlemek için `const` constructor'ları kullanın
-
-## Kullanıcı Deneyimi İpuçları
-
-- Kullanıcı geri bildirimi için duruma uygun animasyonlar kullanın
-- Butonlar ve diğer etkileşimli öğeler için yeterli dokunma alanı bırakın (en az 48x48 piksel)
-- Yükleme durumlarını herzaman gösterin, kullanıcıyı bekletmeyin
-- Hata durumlarında yapıcı ve yönlendirici mesajlar sağlayın
-
-## Geliştirilecek Özellikler
-
-Proje için düşünülen ek özellikler:
-
-- [ ] Kullanıcı kimlik doğrulama (Authentication)
-- [ ] Cevapları düzenleme imkanı
-- [ ] Karanlık tema desteği
-- [ ] Çoklu dil desteği
-- [ ] Cihaza plan kaydetme
-- [ ] Plan paylaşma seçenekleri 

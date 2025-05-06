@@ -10,7 +10,7 @@ import 'screens/questionnaire_screen.dart';
 import 'screens/career_plan_screen.dart';
 
 Future<void> main() async {
-  // .env dosyasını yükle
+
   await dotenv.load(fileName: '.env');
   
   runApp(const MyApp());
@@ -21,12 +21,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // API servisi oluştur
+
     final apiService = ApiService();
     
     return MultiProvider(
       providers: [
-        // Provider'ları tanımla
+
         ChangeNotifierProvider(
           create: (_) => QuestionnaireProvider(apiService: apiService),
         ),

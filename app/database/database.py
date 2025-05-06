@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 DATABASE_URL = "career_planner.db"
 
 async def init_db() -> None:
-    """Veritabanı başlatılır ve gerekli tablolar oluşturulur""
+    """Veritabanı başlatılır ve gerekli tablolar oluşturulur"""
     try:
         async with aiosqlite.connect(DATABASE_URL) as db:
             # Kullanıcılar tablosu

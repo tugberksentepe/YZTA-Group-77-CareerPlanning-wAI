@@ -1,31 +1,31 @@
-/// Konuşma mesajını temsil eden sınıf
 class ConversationMessage {
-  /// Mesaj içeriği
   final String message;
-  
-  /// Mesaj kullanıcıdan mı geldi?
+
   final bool isUser;
-  
-  /// Mesajın oluşturulma zamanı
+
   final DateTime createdAt;
 
-  /// Yeni bir konuşma mesajı nesnesi oluşturur
   ConversationMessage({
     required this.message,
     required this.isUser,
     required this.createdAt,
   });
 
-  /// API yanıtından bir ConversationMessage nesnesi oluşturur
   factory ConversationMessage.fromJson(Map<String, dynamic> json) {
+    bool isUserBool;
+    if (json['is_user'] is int) {
+      isUserBool = json['is_user'] == 1;
+    } else {
+      isUserBool = json['is_user'] as bool;
+    }
+    
     return ConversationMessage(
       message: json['message'],
-      isUser: json['is_user'],
+      isUser: isUserBool,
       createdAt: DateTime.parse(json['created_at']),
     );
   }
 
-  /// ConversationMessage nesnesini JSON formatına dönüştürür
   Map<String, dynamic> toJson() {
     return {
       'message': message,
